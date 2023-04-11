@@ -2,59 +2,61 @@ import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
 import "./SignupScreen.css";
 import {
-  createUserWithEmailAndPassword
+  signInWithEmailAndPassword,
 } from "firebase/auth";
-import SignInScreen from "./SignInScreen";
+import SignupSreen from "./SignupScreen";
 
-const SignupSreen = () => {
+const SignInScreen = () => {
   const [signUp, setSignUp] = useState(false);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
-  const register = (e) => {
+
+
+  const signIn = (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword( 
+    signInWithEmailAndPassword(
       auth,
       emailRef.current.value,
       passwordRef.current.value
     )
       .then((authUser) => {
-        console.log(authUser);
+        // console.log(authUser);
       })
       .catch((error) => {
         alert(error.message);
       });
   };
 
-
   return (
-    <div >
-      {signUp ? (
-        <SignInScreen/>
-      ): (
+    <>
+    {
+      signUp ? (
+        <SignupSreen/>
+      ) : (
         <div className="signupScreen">
-          <form>
-        <h1>Sign up</h1>
+      <form>
+        <h1>Sign in</h1>
         <input ref={emailRef} type="email" placeholder="Email" />
         <input ref={passwordRef} type="password" placeholder="Password" />
-        <button onClick={register} type="submit">
-          Sign Up
+        <button onClick={signIn} type="submit">
+          Sign In
         </button>
 
         <h4>
-          <span className="signupScreen_gray">Already have an account? </span>{" "}
-          <span onClick={()=> setSignUp(true)} className="signupScreen_link">
+          <span className="signupScreen_gray">New to Netflix? </span>{" "}
+          <span onClick={()=>setSignUp(true)} className="signupScreen_link">
             {" "}
-            Sign In.
+            Sign Up now.
           </span>
         </h4>
       </form>
-        </div>
-        
-      )}
-      
     </div>
+      )
+    }
+    
+    </>
   );
 };
 
-export default SignupSreen;
+export default SignInScreen;

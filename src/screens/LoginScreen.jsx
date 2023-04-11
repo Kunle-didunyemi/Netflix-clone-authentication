@@ -16,7 +16,7 @@ const LoginScreen = () => {
             setSignIn(true);
           }}
         >
-          Sign In
+          Get started
         </button>
 
         <div className="loginScreen_gradient"></div>
